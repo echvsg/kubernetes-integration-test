@@ -3,8 +3,9 @@ pipeline {
    agent { 
        
        kubernetes {
+       	cloud 'openshift'
         yamlFromFile = readFile 'pod.yaml' 
-        //cloud 'openshift'
+        
         //yamlFile libraryResource('kubernetesMavenSlavePod.yaml')
         //yamlFile 'kubernetesMavenSlavePodYaml'
         //label 'maven' 
