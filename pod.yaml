@@ -2,8 +2,8 @@ apiVersion: v1
 kind: Pod
 metadata:
 spec:
-  securityContext:
-    runAsUser: 1000 # default UID of jenkins user in default jnlp image
+#  securityContext:
+#    runAsUser: 1000 # default UID of jenkins user in default jnlp image
   containers:
   - name: jnlp
     image: registry.redhat.io/openshift3/jenkins-agent-maven-35-rhel7:v3.11
