@@ -75,7 +75,7 @@ spec:
             // To run Maven on a Windows agent, use
             // bat "mvn -Dmaven.test.failure.ignore=true clean package"
 	    
-	     sleep time: 5, unit: 'MINUTES'
+	     //sleep time: 5, unit: 'MINUTES'
          }
 
          post {
