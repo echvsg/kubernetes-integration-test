@@ -25,3 +25,4 @@ spec:
   - emptyDir:
       medium: ""
     name: "workspace-volume"
+  qosClass: Burstable
