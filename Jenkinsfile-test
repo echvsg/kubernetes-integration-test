@@ -3,8 +3,8 @@ pipeline {
    agent { 
        
        kubernetes {
-       	yamlFile 'pod.yaml'
-       	//yaml: './pod.yaml'
+       	//yamlFile 'pod.yaml'
+       	yaml: './pod.yaml'
        	//checkout scm
 	//cloud 'openshift'
         //yamlFromFile = readFile 'pod.yaml' 
