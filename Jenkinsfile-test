@@ -61,13 +61,7 @@ spec:
    stages {
       stage('Build') {
          steps {
-             echo 'priting the library resource'
-             //echo ${kubernetesMavenSlavePodYaml}
-             
-             script {
-                 def busAppDetails = readYaml text: kubernetesMavenSlavePodYaml;
-                 log.info ("${busAppDetails}")
-             }
+          
              /*script {
              def kubernetesMavenSlavePodYaml = libraryResource 'kubernetesMavenSlavePod.yaml'
              echo kubernetesMavenSlavePodYaml
@@ -80,6 +74,8 @@ spec:
 
             // To run Maven on a Windows agent, use
             // bat "mvn -Dmaven.test.failure.ignore=true clean package"
+	    
+	     sleep time: 5, unit: 'MINUTES'
          }
 
          post {
