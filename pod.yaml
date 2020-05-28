@@ -12,7 +12,7 @@ spec:
       limits: {}
       requests: {}
     securityContext:
-      privileged: false
+      privileged: true
     tty: false
     volumeMounts:
     - mountPath: "/tmp"
