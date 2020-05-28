@@ -1,0 +1,90 @@
+pipeline {
+   
+   agent { 
+       
+       kubernetes {
+        yamlFromFile = readFile 'pod.yaml' 
+        //cloud 'openshift'
+        //yamlFile libraryResource('kubernetesMavenSlavePod.yaml')
+        //yamlFile 'kubernetesMavenSlavePodYaml'
+        //label 'maven' 
+        //defaultContainer 'maven'
+        /*
+        yaml '''
+        
+metadata:
+  labels:
+    jenkins: "slave"
+    jenkins/label: "maven"
+spec:
+  containers:
+  - name: "jnlp"
+    image: "registry.redhat.io/openshift3/jenkins-agent-maven-35-rhel7:v3.11"
+    imagePullPolicy: "Always"
+    resources:
+      limits: {}
+      requests: {}
+    securityContext:
+      privileged: false
+    tty: false
+    volumeMounts:
+    - mountPath: "/tmp"
+      name: "workspace-volume"
+      readOnly: false
+    workingDir: "/tmp"
+  hostNetwork: false
+  restartPolicy: "Never"
+  volumes:
+  - emptyDir:
+      medium: ""
+    name: "workspace-volume"
+        '''
+        
+        */  
+        //def kubernetesMavenSlavePodYaml = libraryResource 'kubernetesMavenSlavePod.yaml'
+	    //yamlFile 'kubernetesMavenSlavePodYaml'
+        //cloud 'openshift'
+	    //label 'maven' 
+   } }
+   
+
+   tools {
+      // Install the Maven version configured as "M3" and add it to the path.
+      maven "M3"
+   }
+
+   stages {
+      stage('Build') {
+         steps {
+             echo 'priting the library resource'
+             //echo ${kubernetesMavenSlavePodYaml}
+             
+             script {
+                 def busAppDetails = readYaml text: kubernetesMavenSlavePodYaml;
+                 log.info ("${busAppDetails}")
+             }
+             /*script {
+             def kubernetesMavenSlavePodYaml = libraryResource 'kubernetesMavenSlavePod.yaml'
+             echo kubernetesMavenSlavePodYaml
+             }*/
+            // Get some code from a GitHub repository
+            git 'https://github.com/jglick/simple-maven-project-with-tests.git'
+
+            // Run Maven on a Unix agent.
+            sh "mvn -Dmaven.test.failure.ignore=true clean package"
+
+            // To run Maven on a Windows agent, use
+            // bat "mvn -Dmaven.test.failure.ignore=true clean package"
+         }
+
+         post {
+            // If Maven was able to run the tests, even if some of the test
+            // failed, record the test results and archive the jar file.
+            success {
+               junit '**/target/surefire-reports/TEST-*.xml'
+               archiveArtifacts 'target/*.jar'
+            }
+         }
+      }
+   }
+}
