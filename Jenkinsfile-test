@@ -5,7 +5,7 @@ pipeline {
        kubernetes {
        	cloud 'openshift'
 	yamlFile 'pod.yaml'
-       	yaml: './pod.yaml'
+       	//yaml: './pod.yaml'
        	//checkout scm
 	
         //yamlFromFile = readFile 'pod.yaml' 
