@@ -1,15 +1,10 @@
 pipeline {
-
-node('master'){
-   checkout scm
-   yamlFromFile = readFile 'pod.yaml' //Read yaml file
-}
-
-   
+  
    agent { 
        
        kubernetes {
-       	yaml: yamlFromFile
+       	yamlFile 'pod.yaml'
+       	//yaml: './pod.yaml'
        	//checkout scm
 	//cloud 'openshift'
         //yamlFromFile = readFile 'pod.yaml' 
